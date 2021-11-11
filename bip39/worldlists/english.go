@@ -1,4 +1,25 @@
-abandon
+package worldlists
+
+import (
+	"fmt"
+	"hash/crc32"
+	"strings"
+)
+
+// English is a slice of mnemonic words taken from the bip39 specification
+// https://raw.githubusercontent.com/bitcoin/bips/master/bip-0039/english.txt
+
+func init() {
+	// Ensure word list is correct
+	checksum := crc32.ChecksumIEEE([]byte(english))
+	if fmt.Sprintf("%x", checksum) != "c1dbd296" {
+		panic("BIP39 English world list checksum invalid")
+	}
+}
+
+var English = strings.Split(strings.TrimSpace(english), "\n")
+
+const english = `abandon
 ability
 able
 about
@@ -2046,3 +2067,4 @@ zebra
 zero
 zone
 zoo
+`
